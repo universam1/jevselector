@@ -1,5 +1,7 @@
 # jevselector
 
+![jevselector demo — Jev scores every skill per turn and drops the irrelevant ones](dev/demo/out/jevselector-demo.gif)
+
 An [OpenCode](https://opencode.ai) **v2** plugin that uses [Jev](https://typesafe.ai)
 (TypeSafe AI's "System One" decision model) to dynamically select which **skills**
 and **tools** are exposed to the model on each turn — trimming the system prompt

@@ -1,0 +1,58 @@
+{
+  "request": "Create a PDF report from my data",
+  "note": "Same request, different agents in oh-my-opencode-slim → different relevant skill sets. Pinned orchestration skills always survive.",
+  "pinnedSkills": ["oh-my-opencode-slim", "deepwork", "verification-planning", "worktrees"],
+  "threshold": 0.5,
+  "agents": [
+    {
+      "agent": "orchestrator",
+      "keptCount": 13,
+      "kept": [
+        { "id": "pdf", "noul": 0.94 },
+        { "id": "report", "noul": 0.94 },
+        { "id": "find-skills", "noul": 0.81 },
+        { "id": "verification-planning", "noul": 0.75, "pinned": true },
+        { "id": "xlsx", "noul": 0.74 },
+        { "id": "reflect", "noul": 0.72 },
+        { "id": "simplify", "noul": 0.65 },
+        { "id": "import-memory", "noul": 0.64 },
+        { "id": "learn", "noul": 0.63 },
+        { "id": "worktrees", "noul": 0.6, "pinned": true },
+        { "id": "docx", "noul": 0.56 },
+        { "id": "deepwork", "noul": 0.53, "pinned": true },
+        { "id": "opencode", "noul": 0.51 }
+      ]
+    },
+    {
+      "agent": "librarian",
+      "keptCount": 8,
+      "kept": [
+        { "id": "pdf", "noul": 0.94 },
+        { "id": "report", "noul": 0.89 },
+        { "id": "find-skills", "noul": 0.69 },
+        { "id": "xlsx", "noul": 0.69 },
+        { "id": "docx", "noul": 0.59 },
+        { "id": "learn", "noul": 0.59 },
+        { "id": "simplify", "noul": 0.55 },
+        { "id": "grill-with-docs", "noul": 0.51 }
+      ]
+    },
+    {
+      "agent": "fixer",
+      "keptCount": 11,
+      "kept": [
+        { "id": "pdf", "noul": 0.98 },
+        { "id": "report", "noul": 0.95 },
+        { "id": "xlsx", "noul": 0.74 },
+        { "id": "simplify", "noul": 0.72 },
+        { "id": "find-skills", "noul": 0.71 },
+        { "id": "learn", "noul": 0.69 },
+        { "id": "verification-planning", "noul": 0.62, "pinned": true },
+        { "id": "clonedeps", "noul": 0.59 },
+        { "id": "opencode", "noul": 0.59 },
+        { "id": "reflect", "noul": 0.58 },
+        { "id": "codemap", "noul": 0.5 }
+      ]
+    }
+  ]
+}
