@@ -32,6 +32,31 @@ Verified end-to-end: the measured **outgoing** system prompt dropped from ~5,672
 to ~2,724 tokens on a real turn. Jev decision cost: ~250–950 ms, cached across
 tool-continuation turns. Token figures are ~4-chars/token estimates.
 
+### oh-my-opencode-slim orchestrator
+
+jevselector also works under multi-agent setups. Verified against the
+[oh-my-opencode-slim](https://github.com/malhashemi/oh-my-opencode) `orchestrator`
+agent (whose system prompt is much larger — ~10k tokens — because of the
+orchestration playbook), with orchestration skills pinned via `alwaysKeepSkills`:
+
+Request: *"Create a PDF report from my data"*
+
+| Metric | Before | After | Change |
+| --- | --- | --- | --- |
+| System prompt | ~10,201 tok | ~7,597 tok | **−2,604 tok (−25.5%)** |
+| Skills advertised | 33 | 5 | Jev kept `pdf`; pins kept `deepwork`, `oh-my-opencode-slim`, `verification-planning`, `worktrees` |
+| Tools | 19 | 3 | irrelevant tools dropped |
+
+Notes from this run:
+
+- The percentage saving is lower than for a lightweight agent because the
+  orchestrator's playbook prompt is large and stays; the **absolute** saving
+  (~2,600 tokens/turn) is similar, and it compounds every turn.
+- `alwaysKeepSkills` correctly protected workflow-critical skills that Jev would
+  otherwise have dropped — recommended for any multi-agent setup.
+- Delegated sub-agents (orchestrator → `librarian`, etc.) each received their own
+  independent Jev rating and cache entry.
+
 ## How it works
 
 1. Registers a `session.context` hook (fires once per model turn).
@@ -54,24 +79,83 @@ tool-continuation turns. Token figures are ~4-chars/token estimates.
 
 ## Install
 
-Add to your `opencode.json`:
+> **Not published to npm yet.** Install it as a local plugin (see below).
+> Once published, the config will simply reference it by name:
+>
+> ```jsonc
+> {
+>   "$schema": "https://opencode.ai/config.json",
+>   "plugins": [
+>     { "package": "jevselector", "options": { "keepThreshold": 0.5 } }
+>   ]
+> }
+> ```
 
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugins": [
-    { "package": "jevselector", "options": { "keepThreshold": 0.5 } }
-  ]
-}
-```
+### Local setup
 
-Set your key (do not commit it):
+Until it is on npm, run jevselector from a local checkout. OpenCode resolves a
+bare package name by installing it from the npm registry, so use a **relative
+path** to the plugin instead.
 
-```sh
-export TYPESAFE_API_KEY=...   # e.g. in your shell profile
-```
+1. Clone the repo:
 
-Restart OpenCode (or start a new run) to load the plugin.
+   ```sh
+   git clone https://github.com/universam1/jevselector.git
+   cd jevselector
+   bun install
+   ```
+
+2. Point your project's `opencode.json` at the local entry point via a relative
+   path. The path must not escape the project directory (OpenCode ignores `../`
+   plugin paths), so the simplest approach is a tiny re-export shim inside your
+   project.
+
+   Create `<your-project>/.opencode/plugins/jevselector/index.ts`:
+
+   ```ts
+   export { default } from "jevselector"
+   ```
+
+   Link the package into your project so the shim can resolve it, e.g. in your
+   project's `package.json`:
+
+   ```jsonc
+   {
+     "dependencies": {
+       "jevselector": "file:/absolute/path/to/jevselector"
+     }
+   }
+   ```
+
+   then `bun install`.
+
+3. Register the local plugin in `opencode.json`:
+
+   ```jsonc
+   {
+     "$schema": "https://opencode.ai/config.json",
+     "plugins": [
+       {
+         "package": "./.opencode/plugins/jevselector",
+         "options": { "keepThreshold": 0.5 }
+       }
+     ]
+   }
+   ```
+
+   Alternatively, drop the plugin source directly under
+   `.opencode/plugins/jevselector/` and import `@opencode-ai/plugin` from a
+   locally installed copy.
+
+4. Set your API key (do not commit it):
+
+   ```sh
+   export TYPESAFE_API_KEY=...   # e.g. in your shell profile
+   ```
+
+5. Restart OpenCode (or start a new run) to load the plugin. Enable
+   `"verbose": true` in the options to see per-turn decisions on stderr
+   (run with `--print-logs`).
 
 ## Configuration
 
