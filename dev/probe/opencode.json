@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": ["./.opencode/plugins/probe"],
+  "skills": [
+    "~/.config/opencode/skills",
+    "~/.claude/skills",
+    "~/.agents/skills",
+    "./.opencode/skills"
+  ]
+}

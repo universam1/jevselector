@@ -1,0 +1,8 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    { "package": "./jevselector-local", "options": { "verbose": true, "keepThreshold": 0.5, "alwaysKeepSkills": ["oh-my-opencode-slim","deepwork","worktrees","verification-planning"] } },
+    "./verify-plugin"
+  ],
+  "skills": ["~/.config/opencode/skills", "~/.claude/skills", "~/.agents/skills"]
+}

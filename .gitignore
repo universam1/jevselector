@@ -1,0 +1,9 @@
+node_modules
+dist
+*.log
+.DS_Store
+
+# dev harness local state (kept in repo as source, but not their installs/artifacts)
+dev/**/node_modules
+dev/**/bun.lock
+dev/e2e/jevselector-local

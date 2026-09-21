@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "jevselector",
+  "version": "0.1.0",
+  "description": "OpenCode v2 plugin that uses Jev (TypeSafe AI) to dynamically select relevant skills and tools per turn, reducing context window usage.",
+  "type": "module",
+  "license": "MIT",
+  "author": "universam1",
+  "homepage": "https://github.com/universam1/jevselector#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/universam1/jevselector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/universam1/jevselector/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "jev",
+    "typesafe",
+    "typesafe-ai",
+    "context",
+    "context-window",
+    "skills",
+    "mcp",
+    "tokens",
+    "token-optimization"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.18.0"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "1.18.30",
+    "@types/bun": "^1.4.2",
+    "@types/node": "24.12.2",
+    "typescript": "5.8.2"
+  }
+}
